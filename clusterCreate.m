@@ -312,7 +312,7 @@ end
 
 if rescale
     % rescale on (0,1) interval
-    data = normalize_propor(data);
+    data = normalizePropor(data);
 end
 
 if show

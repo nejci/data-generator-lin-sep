@@ -510,7 +510,7 @@ while numTrials < numTrialsMax
 end
 
 % scale on [0,1] proportionaly
-data = normalize_propor(data);
+data = normalizePropor(data);
 
 % create labels vector
 labels = zeros(size(data,1),1);

@@ -122,10 +122,8 @@ annotation('textbox', [0 0.9 1 0.1], ...
 switch normalize
     case {0,'none'}
         ;
-    case {1,'range'}
-        data=pplk_normalize(data,'range');
-    case {2,'propor'}
-        data=pplk_normalize(data,'propor');
+    case {1,'propor'}
+        data = normalizePropor(data);
     otherwise
         fprintf(1,'Wrong normalization method! No normalization will occur.\n');
 end
