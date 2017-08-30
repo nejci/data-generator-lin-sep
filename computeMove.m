@@ -3,6 +3,10 @@ function [yNew, dNew] = computeMove(x,y,k)
 % k - stiffness of spring (Hooke's law: F = k*distX2Y), k on [0,1]
 % yNew - new position of y
 % dNew - new distance between x and yNew
+% -------------------------------------------------------------------------
+% Version 1.0; 2017-08-30
+% Nejc Ilc (nejc.ilc_at_gmail.com)
+% -------------------------------------------------------------------------
 
 % Hooke's law
 % E is unit vector of R

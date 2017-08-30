@@ -8,7 +8,7 @@ function [data,labels,exitflag,moreInfo] = createDataset(K,N,shapes,options)
 % K - number of clusters
 % N - number of points in clusters; scalar or a vector [1xK]
 % shapes - cell string of shapes that can be used for clusters:
-%         A, B, C(S), H, I, J, L, O(S), S, T, U(S), V, Y, Z  
+%         A, B, C(S), H, I, J, L, O(S), S, T, U(S), V, Y, Z
 %         LINE(S), CROSS, BARU1(S), BARU2(S), BARO(S), JCURVE(S), HALFRING(S)
 %         RECT1, RECT2, SNOWMAN, DOT(S), OVAL, WAVE(S)
 % options - struct with optional parameters:
@@ -34,8 +34,8 @@ function [data,labels,exitflag,moreInfo] = createDataset(K,N,shapes,options)
 % exitflag - 1: success, requirements are met; -1: failure
 % moreInfo - additional info
 % -------------------------------------------------------------------------
-% Version 1.0; 2017-07-05
-% Nejc Ilc
+% Version 1.0; 2017-08-30
+% Nejc Ilc (nejc.ilc_at_gmail.com)
 % -------------------------------------------------------------------------
 
 % Options defaults:
@@ -135,7 +135,7 @@ while numTrials < numTrialsMax
     if showLevel > 0
         fprintf(1,'Trial %d\n',numTrials);
     end
-    
+
     if randomShapesFlag == 1
         shpInd = randi(numShapes,1,K);
     else
@@ -150,19 +150,19 @@ while numTrials < numTrialsMax
     if randomShapesOrderFlag == 1
         shpInd = shpInd(randperm(K));
     end
-    
+
     if numel(N) == 1
         N = repmat(N,1,K);
     end
-    
+
     % Universe
     universe = [0 0; 50 50];
     universeCenter = mean(universe,1);
     spawnRadius = 20;
-    
+
     % Lin non sep setup
     % Prepare a matrix for evidence of lin. non. separability between
-    % cluster pairs. 
+    % cluster pairs.
     linNonSepMat = false(K,K);
     numPairsAll = K*(K-1)/2;
     if ~isempty(linNonSepDesiredAmount) && linNonSepDesiredAmount < 0
@@ -171,12 +171,12 @@ while numTrials < numTrialsMax
         linNonSepDesiredAmount = min(abs(linNonSepDesiredAmount),numPairsAll);
         linNonSepDesiredAmount = linNonSepDesiredAmount/numPairsAll;
     end
-    
-    
+
+
     % dataset
     data = nan(sum(N),2);
     dataInd = [0,cumsum(N)];
-    
+
     % Random scaling
     % lowerBound is defined by randomScaleAmount
     % upperBound is defined by number of samples (50 -> 250)
@@ -184,43 +184,43 @@ while numTrials < numTrialsMax
     lowerBound = (1-randomScaleAmount);
     upperBound = 0.5*((N(1)-50)/200) +0.5;
     scaleClusterVal =  min(1,(upperBound-lowerBound) * rand() + lowerBound);  % random between lowerBound and 1
-        
+
     exitflag = 0; % 1: all conditions met, -1: num iters over
-    
+
     % first cluster is placed in the center of universe
     clust = clusterCreate(N(1), shapes{shpInd(1)},'scale',scaleClusterVal,distribution);
     clust = clusterRotate(clust,'center'); % random rotation
     clust = clusterMove(clust,'center',universeCenter);
     data(dataInd(1)+1:dataInd(2),:) = clust;
-    
+
     numItersHist = ones(1,K);
-            
+
     % second and further clusters
     % - spawn the cluster on the ring around universe center
     % - apply Hooke's law - force that moves second cluster towards the
     % first one and is proportional to distance between them
     for k = 2:K
-        
+
         upperBound = 0.5*((N(k)-50)/200) +0.5;
         scaleClusterVal =  min(1,(upperBound-lowerBound) * rand() + lowerBound);
         clust = clusterCreate(N(k), shapes{shpInd(k)},'scale',scaleClusterVal,distribution);
         % Position the cluster randomly on the ring around the center of universe
         randAngle = rand()*pi*2;
         spawnPoint = [cos(randAngle), sin(randAngle)] .* spawnRadius + universeCenter;
-        
+
         clust = clusterMove(clust,'center',spawnPoint);
         clust = clusterRotate(clust,'center'); % random rotation
         data(dataInd(k)+1:dataInd(k+1),:) = clust;
-        
+
         % get alphaShapes with border points (ind) from clusters
         [aShp,bndPoints] = getAlphaShapesMat(data,dataInd);
-                        
+
         % Simulation
         simulationRunning = 1;
         numIters = 0;
         while simulationRunning
             numIters = numIters +1;
-            
+
             if showLevel == 2
                 if exist('fig','var')
                     close(fig);
@@ -228,7 +228,7 @@ while numTrials < numTrialsMax
                 fig = plotUniverse(aShp,universe);
                 input(['Start of iteration ',num2str(numIters)]);
             end
-            
+
             %------------------------------------------------------------------
             % Choose reference points
             % a) choose one boundary point from fixed clusters and one from moving cluster
@@ -236,9 +236,9 @@ while numTrials < numTrialsMax
             % c) nearest points
             fixInd = randi(k-1);
             movInd = k;
-            
+
             numBndPoints = cellfun(@numel,bndPoints);
-            
+
             switch strategyReferencePoints
                 case 'random'
                     % random boundary points from fix and mov
@@ -248,11 +248,11 @@ while numTrials < numTrialsMax
                     refPointMovInd = bndPoints{movInd}(randi(numBndPointsMov));
                     refPointFix = aShp{fixInd}.Points(refPointFixInd,:);
                     refPointMov = aShp{movInd}.Points(refPointMovInd,:);
-                    
+
                 case 'center'
                     refPointFix = mean(aShp{fixInd}.Points,1); % mean of boundary points?
                     refPointMov = mean(aShp{movInd}.Points,1); % mean of boundary points?
-                    
+
                 case 'nearest'
                     % nearest boundary points between fix and mov cluster
                     [nI,distMov2Fix] = nearestNeighbor(aShp{fixInd}, aShp{movInd}.Points(bndPoints{movInd},:));
@@ -261,7 +261,7 @@ while numTrials < numTrialsMax
                     refPointMovInd = bndPoints{movInd}(refPointMovInd);
                     refPointFix = aShp{fixInd}.Points(refPointFixInd,:);
                     refPointMov = aShp{movInd}.Points(refPointMovInd,:);
-                    
+
                 case 'nearest2center'
                     % nearest boundary point of mov to center of fix boundary
                     % Why center of boundary? Faster. Also, with this strategy
@@ -272,17 +272,17 @@ while numTrials < numTrialsMax
                     refPointMovInd = bndPoints{movInd}(refPointMovInd);
                     refPointFix = mean(aShp{fixInd}.Points(bndPoints{fixInd},:),1);
                     refPointMov = aShp{movInd}.Points(refPointMovInd,:);
-                    
+
                 otherwise
                     error('Wrong strategyReferencePoints');
             end
-            
+
             %------------------------------------------------------------------
             % Try to move cluster (moving) towards fixed one, randomly rotate
             % Compute direction and amount of movement of moving cluster
-            
+
             CmovOld = aShp{movInd}.Points; % restore this state if new move fails
-            
+
             [movNew,distNew] = computeMove(refPointFix,refPointMov,stiffness);
             angleCoarse = angleCoarseMax*(rand()*2-1) * distNew/spawnRadius;
             if strcmpi(strategyReferencePoints,'center')
@@ -292,7 +292,7 @@ while numTrials < numTrialsMax
                 CmovNew = clusterMove(aShp{movInd}.Points,refPointMovInd,movNew);
                 CmovNew = clusterRotate(CmovNew,refPointMovInd,angleCoarse);
             end
-            
+
             if showLevel == 2
                 close(fig);
                 fig = plotUniverse(aShp);
@@ -301,22 +301,22 @@ while numTrials < numTrialsMax
                 plot(refPointFix(1),refPointFix(2),'gx');
                 plot(refPointMov(1),refPointMov(2),'bx');
                 input('Choosen points ...');
-                
+
                 close(fig);
                 aShp{movInd}.Points = CmovNew; % update alpha shape points
                 fig = plotUniverse(aShp);
-                input(['Try to make this move: distNew = ',num2str(distNew),', angleCoarse = ',num2str(angleCoarse*180/pi),'°']);
+                input(['Try to make this move: distNew = ',num2str(distNew),', angleCoarse = ',num2str(angleCoarse*180/pi),'ï¿½']);
             end
-            
-            
+
+
             %------------------------------------------------------------------
             % Check for contraints about distance between boundary points
             numItersFineTune = 0;
             isFineTuned = 0;
             while ~isFineTuned
-                
+
                 numItersFineTune = numItersFineTune+1;
-                
+
                 % gather boundary points of fixed clusters
                 boundPointsCmp = zeros(sum(numBndPoints(1:movInd-1)),2);
                 bndPntsInd = [0 cumsum(numBndPoints)];
@@ -324,17 +324,17 @@ while numTrials < numTrialsMax
                     boundPointsCmp(bndPntsInd(s)+1:bndPntsInd(s+1),:) = aShp{s}.Points(bndPoints{s},:);
                 end
                 %isOverlap2 = inShape(aShp{movInd},boundPointsCmp(:,1),boundPointsCmp(:,2));
-                
+
                 % boundary points of mov cluster
                 boundPointsMov = CmovNew(bndPoints{movInd},:);
-                
+
                 % Compute minimal distance between boundary points mov:others
                 dMov2Oth = sqrt(sqdistance2(boundPointsMov,boundPointsCmp));
                 [minValTmp,minInd] = min(dMov2Oth,[],1);
                 [minVal,minIndFix] = min(minValTmp);
                 minIndMov = minInd(minIndFix);
                 CminIndMov = bndPoints{movInd}(minIndMov);
-                
+
                 % If minimal distance is lower than threshold, move cluster
                 % away:
                 % a) in the direction of the nearest boundary point
@@ -355,23 +355,23 @@ while numTrials < numTrialsMax
                         (rand()*2-1) * ... % ((-1)^round(rand()))
                         (1-numItersFineTune/numItersFineTuneMax); % weight by number of iterations
                     %abs(diffBndDist)/minBoundDist * ... % weight by closeness to boundary
-                    
-                    
+
+
                     CmovNew = clusterRotate(CmovNew,'center',angleFine);
-                    
+
                     if showLevel == 2
                         close(fig);
                         aShp{movInd}.Points = CmovNew;
                         fig = plotUniverse(aShp);
                         input(['Boundary points too close, moved back: distNew = ',...
                             num2str(norm(pntFix-pntMovNew)),...
-                            ', angleFine = ', num2str(angleFine*180/pi),'°']);
+                            ', angleFine = ', num2str(angleFine*180/pi),'ï¿½']);
                     end
-                    
+
                 else
                     isFineTuned = 1;
                 end
-                
+
                 % watchdog for fine-tunning
                 if numItersFineTune > numItersFineTuneMax
                     if showLevel > 0
@@ -380,23 +380,23 @@ while numTrials < numTrialsMax
                     break;
                 end
             end
-            
+
             % update of alpha shape
             aShp{movInd}.Points = CmovNew;
             % check overlap between mov cluster and fixed data
             isOverlap = any(inShape(aShp{movInd},data(1:dataInd(k),:)));
-            
+
             % check minBoundDist for every point in mov cluster
             isOverlapDeep = 0;
             if ~isOverlap && isFineTuned
                 Dmat = sqrt(sqdistance2(aShp{movInd}.Points,data(1:dataInd(k),:)));
-                diffBndDist = min(Dmat(:)) - minBoundDist;                
-                
+                diffBndDist = min(Dmat(:)) - minBoundDist;
+
                 if diffBndDist < -minBoundDistTol
                     isOverlapDeep = 1;
                 end
             end
-            
+
             if isOverlap || isOverlapDeep || ~isFineTuned
                 % reset move if clusters overlap or if fine-tunning is not
                 % resolved
@@ -409,11 +409,11 @@ while numTrials < numTrialsMax
                 % Update data with mov cluster new position
                 data(dataInd(k)+1:dataInd(k+1),:) = CmovNew;
             end
-            
-            
+
+
             %------------------------------------------------------------------
             % Check stopping criteria
-            
+
             % watchdog for number of iterations
             stopCrit_numIters = 0;
             if numIters > numItersMax
@@ -422,14 +422,14 @@ while numTrials < numTrialsMax
                 end
                 stopCrit_numIters = 1;
             end
-            
+
             % if minimal distance between boundary points is exactly as desired
             stopCrit_boundDist = 0;
             if isFineTuned && (abs(diffBndDist) <= minBoundDistTol)
                 %fprintf(1,'Stopping criterion met: minBoundDistTol reached.\n');
                 stopCrit_boundDist = 1;
             end
-            
+
             % Linear seperability test between clusters boundaries
             % For all the pairs of mov->fix clusters, run linSepTest
             % Compute only for mov cluster.
@@ -438,12 +438,12 @@ while numTrials < numTrialsMax
                 linNonSepMat(movInd,fixI) = linSepTest(...
                     aShp{movInd}.Points(bndPoints{movInd},:),...
                     aShp{fixI}.Points(bndPoints{fixI},:),linprogImpl) == 0;
-            end                        
+            end
             chdir(oldPath);
             linNonSepNum = sum(linNonSepMat(:));
             linNonSepRatio = linNonSepNum/numPairsAll; % global ratio
             isAnyLinNonSep = linNonSepNum > 0;
-            
+
             stopCrit_linNonSep = 0;
             if linNonSepDesiredFlag == 0 || linNonSepDesiredAmount == 0
                 if ~isAnyLinNonSep
@@ -455,7 +455,7 @@ while numTrials < numTrialsMax
                     if any(linNonSepMat(movInd,:))
                         stopCrit_linNonSep = 1;
                     end
-                    
+
                     if isempty(linNonSepDesiredAmount)
                         % is there at least one nonSep pair?
                         stopCrit_linNonSep = 1;
@@ -476,7 +476,7 @@ while numTrials < numTrialsMax
                     end
                 end
             end
-            
+
             % aggregate stopping criteria
             if stopCrit_numIters || (stopCrit_linNonSep && stopCrit_boundDist)
                 simulationRunning = 0;
@@ -489,7 +489,7 @@ while numTrials < numTrialsMax
                     exitflag = 1;
                 end
             end
-            
+
             % show
             if showLevel > 0
                 if exist('fig','var')
@@ -503,7 +503,7 @@ while numTrials < numTrialsMax
         end
         numItersHist(k) = numIters;
     end
-    
+
     if exitflag == 1
         break;
     end
@@ -540,11 +540,11 @@ if showLevel > 0
     else
         fprintf(1,'[FAIL] exitflag: %d\n',exitflag);
     end
-    
+
     fprintf('\tReached linNonSepRatio: %f (flag: %d, desired: %f)\n',linNonSepRatio,linNonSepDesiredFlag,linNonSepDesiredAmount);
     fprintf('\tReached minBoundDist: %f (desired: %f, tol:%f)\n',minVal,minBoundDist, minBoundDistTol);
     fprintf('\tIterations: %d (allowed: %d)\n',numIters,numItersMax);
-    
+
     pplk_scatterPlot(data,labels);
     axis equal;
 end

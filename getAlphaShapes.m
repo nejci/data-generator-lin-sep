@@ -1,5 +1,8 @@
 function [shp,bndPnts] = getAlphaShapes(data,alpha,holeThr)
-
+% -------------------------------------------------------------------------
+% Version 1.0; 2017-08-30
+% Nejc Ilc (nejc.ilc_at_gmail.com)
+% -------------------------------------------------------------------------
 numData = 1;
 if iscell(data)
     numData = numel(data);
@@ -19,9 +22,9 @@ for i = 1:numData
         shpTmp = alphaShape(data{i});
         alpha = criticalAlpha(shpTmp,'one-region')+0.02;
     end
-    
+
     shp{i} = alphaShape(data{i}, alpha, 'HoleThreshold',holeThr);
-    
+
 end
 if numData == 1
     shp = shp{1};
@@ -37,7 +40,7 @@ if nargout > 1
         bndPntsTmp = boundaryFacets(shp{i});
         bndPnts{i} = bndPntsTmp(:,1);
     end
-    
+
     if numData == 1
         bndPnts = bndPnts{1};
     end

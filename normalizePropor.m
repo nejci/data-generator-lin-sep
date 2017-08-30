@@ -1,4 +1,9 @@
 function [dataNorm] = normalizePropor(data)
+% Normalization of the data proportionaly on the interval [0,1]
+% -------------------------------------------------------------------------
+% Version 1.0; 2017-08-30
+% Nejc Ilc (nejc.ilc_at_gmail.com)
+% -------------------------------------------------------------------------
 
 %find the largest max-min and compute scaling coefficient
 [n,d]=size(data);

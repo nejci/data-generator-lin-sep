@@ -1,5 +1,9 @@
 function fig = plotUniverse( aShp, universe )
-
+% Plot universe, where clusters of stars live.
+% -------------------------------------------------------------------------
+% Version 1.0; 2017-08-30
+% Nejc Ilc (nejc.ilc_at_gmail.com)
+% -------------------------------------------------------------------------
 
 
 fig = figure();
@@ -23,4 +27,3 @@ end
 axis equal;
 hold off;
 end
-

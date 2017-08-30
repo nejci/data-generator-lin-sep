@@ -1,9 +1,9 @@
 function [fig,data] = pplk_scatterPlot(data,labels,K,options)
 % [fig,data]=PPLK_SCATTERPLOT(data,labels,K,options)
-% DESCRIPTION:	Function plots a scatter plot of data and clustering results
+% Function plots a scatter plot of data and clustering results
 % performed on data resultng in a labels vector.
 %
-% INPUTS:		
+% INPUTS:
 %   data	(matrix)	input data, size of [N x D]
 %	labels	(vector)	clustering
 %			(matrix)	set of clusterings - plot them on the subfigure
@@ -25,16 +25,17 @@ function [fig,data] = pplk_scatterPlot(data,labels,K,options)
 %                         .markerSize (int) size of the marker
 %                         .interpreterMode (string) 'tex','latex',['none']
 %
-% OUTPUTS:		
+% OUTPUTS:
 %   fig		(handle)	handle on figure
 %   data    (matrix)    processed data displayed on graph (normalized, PCA
 %                       transformed if required)
 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Last modification: 20.11.2013
-% (C) 2013, Nejc Ilc (name.surname@gmail.com)
-% Part of the Pepelka package
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% -------------------------------------------------------------------------
+% Version 1.0; 2017-08-30
+% Nejc Ilc (nejc.ilc_at_gmail.com)
+% Part of the Pepelka package.
+% -------------------------------------------------------------------------
+
 
 [N,D]=size(data);
 
@@ -98,7 +99,7 @@ if(exist('options','var'))
     if isfield(options,'interpreterMode')
         interpreterMode=options.interpreterMode;
     end
-    
+
 else
     fig=figure();
 end
@@ -133,7 +134,7 @@ if(D>2)
     n=2;
     [~, newData]=princomp(data,'econ');
     data=newData(:,1:n);
-    
+
 end
 
 patterns={'+','o','x','^','square','diamond','*','.','v','>','<','pentagram','hexagram'};
@@ -160,52 +161,52 @@ for plotInd = 1:ensembleSize
     if ~hasK
         K = length(unique(labels));
     end
-    
+
     if(K<5)
         colors=[    218/255 37/255 29/255; ...  % red
                     40/255 22/255 111/255; ...  % dark blue
                     132/255 194/255 37/255; ... % green
                     232/255 188/255 0/255];     % yellow
-        
+
     else
         colors=colormap(jet(K*10));
         colors=colors(1:10:end,:);
     end
-    
+
     if ensembleSize > 1
         subplot(nRows,nCols,plotInd);
     end
     %COLOR MODE - color
     if(strcmp(colorMode,'color'))
-        
+
         for i=1:K
             plot(data(labels==i,1),data(labels==i,2),'.','color',colors(i,:),'markersize',mS);
             hold on;
         end
         hold off;
-        
-        
+
+
     %COLOR MODE - patterns
     elseif (strcmp(colorMode,'pattern'))
-         
+
         for i=1:K
             plot(data(labels==i,1),data(labels==i,2),['k',patterns{mod(i-1,nP)+1}],'markersize',mS);
             hold on;
         end
         hold off;
-        
-        
+
+
     %COLOR MODE - mixed (filled, big patterns)
     elseif (strcmp(colorMode,'mixedClear'))
         patterns={'o','>','pentagram','v','square','diamond','^','hexagram','<','.','*','x','+'};
-        
-        
+
+
         for i=1:K
             plot(data(labels==i,1),data(labels==i,2),patterns{mod(i-1,nP)+1},'MarkerFaceColor',colors(i,:),'MarkerEdgeColor',colors(i,:),'markersize',mS);
             hold on;
         end
         hold off;
-        
+
     else
         for i=1:K
             plot(data(labels==i,1),data(labels==i,2),patterns{mod(i-1,nP)+1},'color',colors(i,:),'markersize',mS);
@@ -213,7 +214,7 @@ for plotInd = 1:ensembleSize
         end
         hold off;
     end
-    
+
     % plot annotations below data points as well
     if ~isempty(annotations)
         assert(length(annotations) == N);
@@ -221,21 +222,20 @@ for plotInd = 1:ensembleSize
         for ind=1:N
             of = 0;%offset*2*rand();
             text(data(ind,1), data(ind,2)-of, annotations{ind},'FontSize',8,'Interpreter','None','HorizontalAlignment','center','VerticalAlignment','top','Rotation',0);
-            
+
         end
     end
-    
+
     if ~isempty(axisTicks{1}) && ~isempty(axisTicks{2})
         set(gca, 'XTick',axisTicks{1},'YTick',axisTicks{2});
     end
-    
+
     if iscell(axisSubtitle)
         title(axisSubtitle(plotInd),'Interpreter',interpreterMode);
     end
-    
+
     xlabel(axisLabels{1});
     ylabel(axisLabels{2});
-    
+
     axis(axisStyle);
 end
-

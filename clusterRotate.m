@@ -2,6 +2,10 @@ function Cnew = clusterRotate(C,refPointInd,angle)
 % Rotate points from C around C(refPointInd,:) by angle.
 % If startPointInd is 'center', the rotation center is a cluster mean.
 % If missing or empty angle, rotation is by random angle
+% -------------------------------------------------------------------------
+% Version 1.0; 2017-08-30
+% Nejc Ilc (nejc.ilc_at_gmail.com)
+% -------------------------------------------------------------------------
 
 if ~exist('angle','var') || isempty(angle)
     angle = rand()*pi*2;

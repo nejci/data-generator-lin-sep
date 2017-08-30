@@ -4,7 +4,7 @@
 % For interactive demo, set options.showLevel to 1 or 2.
 % -------------------------------------------------------------------------
 % Version: 1.0; 2017-08-30
-% Author: Nejc Ilc
+% Author: Nejc Ilc (nejc.ilc_at_gmail.com)
 
 
 
@@ -28,7 +28,7 @@ options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
 % Plot dataset if success
 if exitflag ~= 1
     fprintf(1, 'Sorry, failed to converge.\n');
-else    
+else
     pplk_scatterPlot(data,labels);
     title('Example 1');
     axis('equal');
@@ -38,7 +38,7 @@ end
 
 %% Example 2
 
-N = [83, 83, 83, 83, 84, 84]; % number of points in a class           
+N = [83, 83, 83, 83, 84, 84]; % number of points in a class
 K = 6; % number of classes
 shapes = getShapesList('ALL'); % Select shapes
 
@@ -57,7 +57,7 @@ options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
 % Plot dataset if success
 if exitflag ~= 1
     fprintf(1, 'Sorry, failed to converge.\n');
-else    
+else
     pplk_scatterPlot(data,labels);
     title('Example 2');
     axis('equal');
@@ -66,7 +66,7 @@ end
 
 %% Example 3
 
-N = [125, 125, 125, 125]; % number of points in a class           
+N = [125, 125, 125, 125]; % number of points in a class
 K = 4; % number of classes
 shapes = {'J','CS','JCURVES','WAVE'}; % Select shapes
 
@@ -85,7 +85,7 @@ options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
 % Plot dataset if success
 if exitflag ~= 1
     fprintf(1, 'Sorry, failed to converge.\n');
-else    
+else
     pplk_scatterPlot(data,labels);
     title('Example 3');
     axis('equal');
@@ -94,7 +94,7 @@ end
 
 %% Example 4
 
-N = [62, 62, 62, 62, 63, 63, 63, 63]; % number of points in a class           
+N = [62, 62, 62, 62, 63, 63, 63, 63]; % number of points in a class
 K = 8; % number of classes
 shapes = getShapesList('ALL'); % Select shapes
 
@@ -113,7 +113,7 @@ options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
 % Plot dataset if success
 if exitflag ~= 1
     fprintf(1, 'Sorry, failed to converge.\n');
-else    
+else
     pplk_scatterPlot(data,labels);
     title('Example 4');
     axis('equal');
