@@ -3,14 +3,14 @@
 %
 % For interactive demo, set options.showLevel to 1 or 2.
 % -------------------------------------------------------------------------
-% Version: 1.0; 2017-07-05
+% Version: 1.0; 2017-08-30
 % Author: Nejc Ilc
 
 
 
 %% Example 1
 
-N = [250, 250]; % number of points in a class           
+N = [250, 250]; % number of points in a class
 K = 2; % number of classes
 shapes = {'JCURVES', 'H'}; % Select shapes
 % Additional options
