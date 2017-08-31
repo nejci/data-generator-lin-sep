@@ -4,7 +4,7 @@ We propose a new data generator that is useful for a systematic benchmarking of 
 
 ## Features
 * A user can adjust:
-  * __how many pairs of classes must be linearly non-separable__
+  * how many pairs of classes must be linearly non-separable
   * the number of classes
   * the number of data-points inside a class
   * the probability distribution of data-points

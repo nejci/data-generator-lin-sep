@@ -8,6 +8,10 @@
 
 clear all; close all; clc;
 
+% Output folder for plots
+outputDir = 'examples';
+[~,~,~] = mkdir(outputDir);
+
 %% Example 1
 N = [250, 250]; % number of points in a class
 K = 2; % number of classes
@@ -22,8 +26,9 @@ options.randomShapesFlag = 0; % can shapes be picked on random from the list sha
 options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
 options.linprogImpl = 'MATLAB'; % 'MATLAB' (requires Optimization toolbox) or 'GLPK'
 
-fprintf(1,'-- Example 1\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
+descStr = sprintf('Example 1: K=%d, Dmin=%.2f, L=%d, dist=%s', ... 
 K, options.minBoundDist, abs(options.linNonSepDesiredAmount), options.distribution);
+fprintf(1,'%s\n',descStr);
 
 % Create data
 [data,labels,exitflag] = createDataset(K,N,shapes,options);
@@ -33,8 +38,9 @@ if exitflag ~= 1
     fprintf(1, 'Sorry, failed to converge.\n');
 else
     pplk_scatterPlot(data,labels);
-    title('Example 1');
+    title(descStr);
     axis('equal');
+    saveas(gcf,[outputDir,filesep,'example1.png']);
 end
 
 
@@ -55,8 +61,9 @@ options.randomShapesFlag = 1; % can shapes be picked on random from the list sha
 options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
 options.linprogImpl = 'MATLAB'; % 'MATLAB' (requires Optimization toolbox) or 'GLPK'
 
-fprintf(1,'-- Example 2\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
+descStr = sprintf('Example 2: K=%d, Dmin=%.2f, L=%d, dist=%s', ... 
 K, options.minBoundDist, abs(options.linNonSepDesiredAmount), options.distribution);
+fprintf(1,'%s\n',descStr);
 
 % Create data
 [data,labels,exitflag] = createDataset(K,N,shapes,options);
@@ -66,8 +73,9 @@ if exitflag ~= 1
     fprintf(1, 'Sorry, failed to converge.\n');
 else
     pplk_scatterPlot(data,labels);
-    title('Example 2');
+    title(descStr);
     axis('equal');
+    saveas(gcf,[outputDir,filesep,'example2.png']);
 end
 
 
@@ -87,8 +95,10 @@ options.randomShapesFlag = 0; % can shapes be picked on random from the list sha
 options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
 options.linprogImpl = 'MATLAB'; % 'MATLAB' (requires Optimization toolbox) or 'GLPK'
 
-fprintf(1,'-- Example 3\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
+descStr = sprintf('Example 3: K=%d, Dmin=%.2f, L=%d, dist=%s', ... 
 K, options.minBoundDist, abs(options.linNonSepDesiredAmount), options.distribution);
+fprintf(1,'%s\n',descStr);
+
 % Create data
 [data,labels,exitflag] = createDataset(K,N,shapes,options);
 
@@ -97,8 +107,9 @@ if exitflag ~= 1
     fprintf(1, 'Sorry, failed to converge.\n');
 else
     pplk_scatterPlot(data,labels);
-    title('Example 3');
+    title(descStr);
     axis('equal');
+    saveas(gcf,[outputDir,filesep,'example3.png']);
 end
 
 
@@ -118,8 +129,9 @@ options.randomShapesFlag = 1; % can shapes be picked on random from the list sha
 options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
 options.linprogImpl = 'MATLAB'; % 'MATLAB' (requires Optimization toolbox) or 'GLPK'
 
-fprintf(1,'-- Example 4\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
+descStr = sprintf('Example 4: K=%d, Dmin=%.2f, L=%d, dist=%s', ... 
 K, options.minBoundDist, abs(options.linNonSepDesiredAmount), options.distribution);
+fprintf(1,'%s\n',descStr);
 
 % Create data
 [data,labels,exitflag] = createDataset(K,N,shapes,options);
@@ -129,6 +141,7 @@ if exitflag ~= 1
     fprintf(1, 'Sorry, failed to converge.\n');
 else
     pplk_scatterPlot(data,labels);
-    title('Example 4');
+    title(descStr);
     axis('equal');
+    saveas(gcf,[outputDir,filesep,'example4.png']);
 end
