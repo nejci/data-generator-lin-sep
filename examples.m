@@ -85,6 +85,7 @@ options.minBoundDist = 0.1; % restricted zone around boundary points
 options.distribution = 'GAUSS'; % UNIFORM, GAUSS or MIXED (randomly choose between first and second)
 options.randomShapesFlag = 0; % can shapes be picked on random from the list shapes?
 options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
+options.linprogImpl = 'MATLAB'; % 'MATLAB' (requires Optimization toolbox) or 'GLPK'
 
 fprintf(1,'-- Example 3\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
 K, options.minBoundDist, options.linNonSepDesiredAmount, options.distribution);
@@ -115,6 +116,7 @@ options.minBoundDist = 0.08; % restricted zone around boundary points
 options.distribution = 'MIXED'; % UNIFORM, GAUSS or MIXED (randomly choose between first and second)
 options.randomShapesFlag = 1; % can shapes be picked on random from the list shapes?
 options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
+options.linprogImpl = 'MATLAB'; % 'MATLAB' (requires Optimization toolbox) or 'GLPK'
 
 fprintf(1,'-- Example 4\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
 K, options.minBoundDist, options.linNonSepDesiredAmount, options.distribution);
