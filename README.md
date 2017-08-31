@@ -25,6 +25,3 @@ See `examples.m` for some demonstrational examples or press __Run__.
 In this project we reused the code from:
 * Michael Chen (`sqdistance2.m`)
 * Nicolo Giorgetti and Niels Klitgord ([A Matlab MEX Interface for the GLPK library](http://glpkmex.sourceforge.net/))
-
-## Bugs and improvements
-> ![GitHub Logo](https://assets-cdn.github.com/favicon.ico) Visit the project on [GitHub](https://github.com/nejci/data-generator-lin-sep).
