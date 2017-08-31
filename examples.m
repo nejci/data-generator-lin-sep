@@ -23,7 +23,7 @@ options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
 options.linprogImpl = 'MATLAB'; % 'MATLAB' (requires Optimization toolbox) or 'GLPK'
 
 fprintf(1,'-- Example 1\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
-K, options.minBoundDist, options.linNonSepDesiredAmount, options.distribution);
+K, options.minBoundDist, abs(options.linNonSepDesiredAmount), options.distribution);
 
 % Create data
 [data,labels,exitflag] = createDataset(K,N,shapes,options);
@@ -56,7 +56,7 @@ options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
 options.linprogImpl = 'MATLAB'; % 'MATLAB' (requires Optimization toolbox) or 'GLPK'
 
 fprintf(1,'-- Example 2\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
-K, options.minBoundDist, options.linNonSepDesiredAmount, options.distribution);
+K, options.minBoundDist, abs(options.linNonSepDesiredAmount), options.distribution);
 
 % Create data
 [data,labels,exitflag] = createDataset(K,N,shapes,options);
@@ -88,7 +88,7 @@ options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
 options.linprogImpl = 'MATLAB'; % 'MATLAB' (requires Optimization toolbox) or 'GLPK'
 
 fprintf(1,'-- Example 3\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
-K, options.minBoundDist, options.linNonSepDesiredAmount, options.distribution);
+K, options.minBoundDist, abs(options.linNonSepDesiredAmount), options.distribution);
 % Create data
 [data,labels,exitflag] = createDataset(K,N,shapes,options);
 
@@ -119,7 +119,7 @@ options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
 options.linprogImpl = 'MATLAB'; % 'MATLAB' (requires Optimization toolbox) or 'GLPK'
 
 fprintf(1,'-- Example 4\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
-K, options.minBoundDist, options.linNonSepDesiredAmount, options.distribution);
+K, options.minBoundDist, abs(options.linNonSepDesiredAmount), options.distribution);
 
 % Create data
 [data,labels,exitflag] = createDataset(K,N,shapes,options);
