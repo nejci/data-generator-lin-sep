@@ -6,21 +6,24 @@
 % Version: 1.0; 2017-08-30
 % Author: Nejc Ilc (nejc.ilc_at_gmail.com)
 
-
+clear all; close all; clc;
 
 %% Example 1
-
 N = [250, 250]; % number of points in a class
 K = 2; % number of classes
 shapes = {'JCURVES', 'H'}; % Select shapes
 % Additional options
 options = [];
 options.linNonSepDesiredFlag = 0; % 0: clusters must be lin. separable, 1: force lin. non. sep clusters; if ratio is [], at least one pair of clusters should be lin. non-separable
-options.linNonSepDesiredAmount = 0; % parameter L: pairs of classes that are not LS
+options.linNonSepDesiredAmount = 0; % parameter L: pairs of classes that are not LS (write as a negative integer)
 options.minBoundDist = 0.5; % restricted zone around boundary points
 options.distribution = 'UNIFORM'; % UNIFORM, GAUSS or MIXED (randomly choose between first and second)
 options.randomShapesFlag = 0; % can shapes be picked on random from the list shapes?
 options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
+options.linprogImpl = 'MATLAB'; % 'MATLAB' (requires Optimization toolbox) or 'GLPK'
+
+fprintf(1,'-- Example 1\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
+K, options.minBoundDist, options.linNonSepDesiredAmount, options.distribution);
 
 % Create data
 [data,labels,exitflag] = createDataset(K,N,shapes,options);
@@ -45,11 +48,15 @@ shapes = getShapesList('ALL'); % Select shapes
 % Additional options
 options = [];
 options.linNonSepDesiredFlag = 0; % 0: clusters must be lin. separable, 1: force lin. non. sep clusters; if ratio is [], at least one pair of clusters should be lin. non-separable
-options.linNonSepDesiredAmount = 0; % parameter L: pairs of classes that are not LS
+options.linNonSepDesiredAmount = 0; % parameter L: pairs of classes that are not LS (write as a negative integer)
 options.minBoundDist = 0.3; % restricted zone around boundary points
 options.distribution = 'UNIFORM'; % UNIFORM, GAUSS or MIXED (randomly choose between first and second)
 options.randomShapesFlag = 1; % can shapes be picked on random from the list shapes?
 options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
+options.linprogImpl = 'MATLAB'; % 'MATLAB' (requires Optimization toolbox) or 'GLPK'
+
+fprintf(1,'-- Example 2\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
+K, options.minBoundDist, options.linNonSepDesiredAmount, options.distribution);
 
 % Create data
 [data,labels,exitflag] = createDataset(K,N,shapes,options);
@@ -73,12 +80,14 @@ shapes = {'J','CS','JCURVES','WAVE'}; % Select shapes
 % Additional options
 options = [];
 options.linNonSepDesiredFlag = 1; % 0: clusters must be lin. separable, 1: force lin. non. sep clusters; if ratio is [], at least one pair of clusters should be lin. non-separable
-options.linNonSepDesiredAmount = -1; % parameter L: pairs of classes that are not LS
+options.linNonSepDesiredAmount = -1; % parameter L: pairs of classes that are not LS (write as a negative integer)
 options.minBoundDist = 0.1; % restricted zone around boundary points
 options.distribution = 'GAUSS'; % UNIFORM, GAUSS or MIXED (randomly choose between first and second)
 options.randomShapesFlag = 0; % can shapes be picked on random from the list shapes?
 options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
 
+fprintf(1,'-- Example 3\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
+K, options.minBoundDist, options.linNonSepDesiredAmount, options.distribution);
 % Create data
 [data,labels,exitflag] = createDataset(K,N,shapes,options);
 
@@ -101,11 +110,14 @@ shapes = getShapesList('ALL'); % Select shapes
 % Additional options
 options = [];
 options.linNonSepDesiredFlag = 1; % 0: clusters must be lin. separable, 1: force lin. non. sep clusters; if ratio is [], at least one pair of clusters should be lin. non-separable
-options.linNonSepDesiredAmount = -2; % parameter L: pairs of classes that are not LS
+options.linNonSepDesiredAmount = -2; % parameter L: pairs of classes that are not LS (write as a negative integer)
 options.minBoundDist = 0.08; % restricted zone around boundary points
 options.distribution = 'MIXED'; % UNIFORM, GAUSS or MIXED (randomly choose between first and second)
 options.randomShapesFlag = 1; % can shapes be picked on random from the list shapes?
 options.showLevel = 0; % 0 - no show, 1 - only end of iter, 2 - show all
+
+fprintf(1,'-- Example 4\nClasses: %d, min. dist.: %f, lin. non-sep. pairs: %d, distribution: %s\n', ... 
+K, options.minBoundDist, options.linNonSepDesiredAmount, options.distribution);
 
 % Create data
 [data,labels,exitflag] = createDataset(K,N,shapes,options);

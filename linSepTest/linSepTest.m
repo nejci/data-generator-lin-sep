@@ -9,6 +9,8 @@ function isLinSep = linSepTest(data1,data2,impl,show)
 % GLPKMEX or MATLAB Optimization toolbox required
 % Nejc Ilc, 2015-10-02
 
+isOptToolbox = license('test','optimization_toolbox');
+
 [N1,dim] = size(data1);
 [N2,dim2] = size(data2);
 assert(dim==dim2,'Number of dimensions must agree between datasets.');
@@ -23,6 +25,9 @@ if ~exist('impl','var') || isempty(impl)
     else
         impl = 'GLPK';
     end
+end
+if ~isOptToolbox
+    impl = 'GLPK';
 end
 
 P = [data1;data2];
