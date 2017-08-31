@@ -1,8 +1,8 @@
 # Data generator with a control over linear separability
 
-We propose a new data generator that is useful for a systematic benchmarking of algorithms for classification and clustering.
+![Logo](https://raw.githubusercontent.com/nejci/data-generator-lin-sep/master/examples/logo.png)
 
-![Example](https://raw.githubusercontent.com/nejci/data-generator-lin-sep/master/examples/example1.png)
+We propose a new data generator that is useful for a systematic benchmarking of algorithms for classification and clustering.
 
 ## Features
 * A user can adjust:
