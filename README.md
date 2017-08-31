@@ -2,6 +2,8 @@
 
 We propose a new data generator that is useful for a systematic benchmarking of algorithms for classification and clustering.
 
+![Example](https://raw.githubusercontent.com/nejci/data-generator-lin-sep/master/examples/example1.png)
+
 ## Features
 * A user can adjust:
   * how many pairs of classes must be linearly non-separable
@@ -12,10 +14,10 @@ We propose a new data generator that is useful for a systematic benchmarking of 
   * the shape of a point-set that forms a class
 * 38 different shapes of classes of various difficulty levels are available.
 * The output is a two-dimensional dataset.
-* It is easy to use generator in a batch mode by calling the function `createDataset()` with different parameters.
+* It is easy to use the generator in a batch mode by calling the function `createDataset()` with different parameters.
 
 ## Getting started
-See `examples.m` for some demonstrational examples.
+See the folder `examples` for some demonstrational examples or run the script `examples.m` that generates them.
 
 ## Publications
 * [Nejc Ilc, "Clustering Based on Weighted Ensemble," PhD thesis, University of Ljubljana, 2016](http://dx.doi.org/10.13140/RG.2.2.12151.62882).
