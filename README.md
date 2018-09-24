@@ -21,7 +21,7 @@ See the folder `examples` for some demonstrational examples or run the script `e
 
 ## Publications
 * [Nejc Ilc, "Clustering Based on Weighted Ensemble," PhD thesis, University of Ljubljana, 2016](http://dx.doi.org/10.13140/RG.2.2.12151.62882).
-* (to appear in) Nejc Ilc, "Data generator with a control over linear separability," Proceedings of 26th International Electrotechnical and Computer Science Conference, Portorož, Slovenia, September 2017. Ljubljana: IEEE Region 8, the Slovenian section of IEEE.
+* Nejc Ilc, "Data generator with a control over linear separability," Proceedings of 26th International Electrotechnical and Computer Science Conference, Portorož, Slovenia, September 2017. Ljubljana: IEEE Region 8, the Slovenian section of IEEE.
 
 ## Acknowledgements
 In this project we reused the code from:
